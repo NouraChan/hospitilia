@@ -18,7 +18,7 @@ class DepartmentController extends Controller
     {
         $departments = Department::all();
 
-        return view('departments.showdepartment', ['departments' => $departments]);
+        return view('admin.departments.departmentindex', ['departments' => $departments]);
     }
 
     /**
@@ -32,6 +32,9 @@ class DepartmentController extends Controller
 
         $departmentDTO = DepartmentDTO::from($createdepartment->all());
         $department = $this->departmentRepository->createdepartment($departmentDTO);
+
+        return view('admin.departments.departmentcreate');
+
 }
 
     /**
@@ -61,7 +64,7 @@ class DepartmentController extends Controller
     public function edit(string $id)
     {
         $department = Department::findOrFail($id);
-        return view('departments.editdepartment', ['department' => $department]);
+        return view('admin.departments.departmentupdate', ['department' => $department]);
     }
 
     /**
@@ -75,7 +78,7 @@ class DepartmentController extends Controller
             'description' => $request->description
         ]);
 
-        return redirect()->route('department.index');
+        return redirect()->route('department. index');
     }
 
     /**

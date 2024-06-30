@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\SurgeryController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\SurgerycoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +24,25 @@ use App\Http\Controllers\SurgerycoController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('guestinterface');
+})->name('home');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('/login',[LoginController::class, 'index'])->name('login');
+// Route::get('/register',[RegisterController::class, 'index'])->name('register');
+
+
+
+Route::get('/welcome', [HomeController::class, 'index'])->name('great');
 
 Route::group(['prefix' => 'department'], function () {
     Route::get('/create', [DepartmentController::class, 'create'])->name('department.create');
@@ -70,6 +89,14 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/edit/{id}', [UsersController::class, 'edit'])->name('users.edit');
 });
 
+Route::group(['prefix' => 'posts'], function () {
+    Route::get('/create', [PostsController::class, 'create'])->name('posts.create');
+    Route::post('/store', [PostsController::class, 'store'])->name('posts.store');
+    Route::get('/destroy{id}', [PostsController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/index', [PostsController::class, 'index'])->name('posts.index');
+    Route::post('/update{id}', [PostsController::class, 'update'])->name('posts.update');
+    Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('posts.edit');
+});
 // Route::group(['prefix' => 'surgeryco'], function () {
 //     Route::get('/create', [SurgerycoController::class, 'create'])->name('surgeryco.create');
 //     Route::post('/store', [SurgerycoController::class, 'store'])->name('surgeryco.store');
